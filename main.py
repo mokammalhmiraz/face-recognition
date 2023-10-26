@@ -10,7 +10,7 @@ from datetime import datetime
 from firebase_admin import storage
 
 
-cred = credentials.Certificate("Face Recognision/serviceAccountKey.json")
+cred = credentials.Certificate("Face-Recognision/serviceAccountKey.json")
 firebase_admin.initialize_app(cred,{
     'databaseURL': "https://attendance-system-b93d3-default-rtdb.firebaseio.com/",
     'storageBucket': "attendance-system-b93d3.appspot.com"
@@ -26,7 +26,7 @@ cap.set(4, 720)
 
 
 # import encoding file
-file = open('Face Recognision/EncodeFile.p','rb')
+file = open('Face-Recognision/EncodeFile.p','rb')
 encodeListKnownWithIds = pickle.load(file)
 file.close()
 encodeListKnown, studentIds = encodeListKnownWithIds
