@@ -18,21 +18,21 @@ stddata = {
             "Department": "CSE",
             "Batch": 201,
             "Starting_Year": 2020,
-            "Total_attendance": std['Total_attendance'],
+            "Total_attendance": 0,
             "CGPA": 3.5,
             "Last_attendance_time": "2022-09-20 00:54:22"
         },
     "2054":
-            {
-                "Name": "Miraz",
-                "ID": 201002054,
-                "Department": "CSE",
-                "Batch": 201,
-                "Starting_Year": 2020,
-                "Total_attendance": std['Total_attendance'],
-                "CGPA": 3.00,
-                "Last_attendance_time": "2022-09-20 00:54:22"
-            },
+        {
+            "Name": "Miraz",
+            "ID": 201002054,
+            "Department": "CSE",
+            "Batch": 201,
+            "Starting_Year": 2020,
+            "Total_attendance": 0,
+            "CGPA": 3.00,
+            "Last_attendance_time": "2022-09-20 00:54:22"
+        },
 
     "2051":
         {
@@ -41,7 +41,7 @@ stddata = {
             "Department": "CSE",
             "Batch": 201,
             "Starting_Year": 2020,
-            "Total_attendance": std['Total_attendance'],
+            "Total_attendance": 0,
             "CGPA": 3.20,
             "Last_attendance_time": "2022-09-20 00:54:22"
         }
@@ -58,7 +58,7 @@ facdata = {
             "Name": "MR Palash Roy",
             "Status": "Lecturer",
             "Starting_Year": 2020,
-            "Total_attendance": fec['Total_attendance'],
+            "Total_attendance": 0,
             "Last_attendance_time": "2022-09-20 00:54:22"
         }
 }

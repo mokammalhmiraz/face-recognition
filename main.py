@@ -128,4 +128,6 @@ while True:
 
     cv2.imshow("Attendance", img)
     # cv2.imshow("FaceBG", imgBackground)
-    cv2.waitKey(1)
+    # cv2.waitKey(1)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
