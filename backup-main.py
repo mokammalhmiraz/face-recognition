@@ -98,71 +98,30 @@ def liveness_detection(frame, detector, predictor):
 
                         studentInfo = db.reference(f'Students/{id}').get()
                         facultyInfo = db.reference(f'Faculty/{id}').get()
-                        enrolled_atd = db.reference('course_attendance')
-                        enrolled = enrolled_atd.get()
-
-                        if enrolled:
-                            endkey = list(enrolled.keys())
-                            print("Primary Keys:", endkey)
-                            # for key in endkey:
-                            #     print(key)
-                        else:
-                            print("No data found.")
-
-                        courselist = []
-                        for i in endkey:
-                            if id in i:
-                                courselist.append(i)
-                            else:
-                                continue
-
-                        print(courselist)
 
                         # Update data of Present
                         if studentInfo:
                             print(studentInfo)
-                            for i in courselist:
-                                start_time_str = enrolled[i].get('start_time')
-                                end_time_str = enrolled[i].get('end_time')
-                                currenttime = datetime.now().strftime("%H:%M")
-                                # print(start_time_str,end_time_str,currenttime)
-                                if start_time_str <= currenttime and currenttime <= end_time_str:
-                                    enrolled_atd = db.reference(f'course_attendance/{i}')
-                                    last_atd = datetime.strptime(enrolled_atd.child('last_attendance_time').get(),
-                                                                 "%Y-%m-%d %H:%M:%S")
-                                    secondElapsed = (datetime.now() - last_atd).total_seconds()
-                                    # datetimeObject = datetime.strptime(studentInfo['Last_attendance_time'], "%Y-%m-%d %H:%M:%S")
-                                    # secondElapsed = (datetime.now() - datetimeObject).total_seconds()
-
-                                    if secondElapsed > 5:
-
-                                        if studentInfo:
-                                            ref = db.reference(f'Students/{id}')
-                                            studentInfo['Total_attendance'] += 1
-                                            ref.child('Total_attendance').set(studentInfo['Total_attendance'])
-                                            ref.child('Last_attendance_time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                                            atd = enrolled_atd.child('total_attendance').get()
-                                            atd = atd + 1
-                                            enrolled_atd.update({'total_attendance': atd})
-                                            currenttime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                                            enrolled_atd.update({'last_attendance_time': currenttime})
-                                    else:
-                                        counter = 0
+                            datetimeObject = datetime.strptime(studentInfo['Last_attendance_time'], "%Y-%m-%d %H:%M:%S")
+                            secondElapsed = (datetime.now() - datetimeObject).total_seconds()
                         if facultyInfo:
                             print(facultyInfo)
                             datetimeObject = datetime.strptime(facultyInfo['Last_attendance_time'], "%Y-%m-%d %H:%M:%S")
                             secondElapsed = (datetime.now() - datetimeObject).total_seconds()
+                        if secondElapsed > 5:
 
-                            if secondElapsed > 5:
-
-                                if facultyInfo:
-                                    ref = db.reference(f'Faculty/{id}')
-                                    facultyInfo['Total_attendance'] += 1
-                                    ref.child('Total_attendance').set(facultyInfo['Total_attendance'])
-                                    ref.child('Last_attendance_time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                            else:
-                                counter = 0
-
+                            if studentInfo:
+                                ref = db.reference(f'Students/{id}')
+                                studentInfo['Total_attendance'] += 1
+                                ref.child('Total_attendance').set(studentInfo['Total_attendance'])
+                                ref.child('Last_attendance_time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                            if facultyInfo:
+                                ref = db.reference(f'Faculty/{id}')
+                                facultyInfo['Total_attendance'] += 1
+                                ref.child('Total_attendance').set(facultyInfo['Total_attendance'])
+                                ref.child('Last_attendance_time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                        else:
+                            counter = 0
                     counter += 1
 
                     if counter >= 10:
@@ -197,8 +156,6 @@ def recognize_faces(frame):
 
 # Capture live video
 video_capture = cv2.VideoCapture(0)
-# video_capture.set(3, 1280)
-# video_capture.set(4, 720)
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("E:/Python/Python Works/shape_predictor_68_face_landmarks.dat")  # Replace with the path to your file
 
