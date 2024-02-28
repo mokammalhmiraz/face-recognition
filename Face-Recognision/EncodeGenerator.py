@@ -9,7 +9,7 @@ from firebase_admin import storage
 
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred,{
-    'databaseURL': "https://attendance-system-b93d3-default-rtdb.firebaseio.com/",
+    'databaseURL': "https://attendancesystem-40d99-default-rtdb.firebaseio.com",
     'storageBucket': "attendance-system-b93d3.appspot.com"
 })
 
