@@ -10,8 +10,8 @@ import pickle
 
 cred = credentials.Certificate("Face-Recognision/serviceAccountKey.json")
 firebase_admin.initialize_app(cred,{
-    'databaseURL': "https://attendance-system-b93d3-default-rtdb.firebaseio.com/",
-    'storageBucket': "attendance-system-b93d3.appspot.com"
+    'databaseURL': "https://attendancesystem-40d99-default-rtdb.firebaseio.com",
+    'storageBucket': "attendancesystem-40d99.appspot.com"
 })
 
 # Step 2: Liveness Detection with Eye Blinking
@@ -131,16 +131,21 @@ def liveness_detection(frame, detector, predictor):
                                     last_atd = datetime.strptime(enrolled_atd.child('last_attendance_time').get(),
                                                                  "%Y-%m-%d %H:%M:%S")
                                     secondElapsed = (datetime.now() - last_atd).total_seconds()
+                                    start_time_dt = datetime.strptime(start_time_str, "%H:%M:%S")
+                                    end_time_dt = datetime.strptime(end_time_str, "%H:%M:%S")
+
+                                    second_count = (end_time_dt - start_time_dt).total_seconds()
                                     # datetimeObject = datetime.strptime(studentInfo['Last_attendance_time'], "%Y-%m-%d %H:%M:%S")
                                     # secondElapsed = (datetime.now() - datetimeObject).total_seconds()
 
-                                    if secondElapsed > 5:
+                                    if secondElapsed > second_count:
 
                                         if studentInfo:
                                             ref = db.reference(f'Students/{id}')
                                             studentInfo['Total_attendance'] += 1
                                             ref.child('Total_attendance').set(studentInfo['Total_attendance'])
-                                            ref.child('Last_attendance_time').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                                            ref.child('Last_attendance_time').set(
+                                                datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                                             atd = enrolled_atd.child('total_attendance').get()
                                             atd = atd + 1
                                             enrolled_atd.update({'total_attendance': atd})
